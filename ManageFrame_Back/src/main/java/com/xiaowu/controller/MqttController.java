@@ -46,16 +46,15 @@ public class MqttController {
 
         //TODO
         // 获取当前用户的详细信息
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            // 直接获取UserDetails对象
-            UserDetails userDetails = (UserDetails) principal;
-            // 获取用户名
-            String username = userDetails.getUsername();
-        }else {
-            //匿名用户，不可能
-        }
-
+        //Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        //if (principal instanceof UserDetails) {
+        //    // 直接获取UserDetails对象
+        //    UserDetails userDetails = (UserDetails) principal;
+        //    // 获取用户名
+        //    String username = userDetails.getUsername();
+        //}else {
+        //    //匿名用户，不可能
+        //}
 
         String token = OneNetUtils.creatOneNetToken(oneNetUserId, oneNeuserAccesskey);
         RestTemplate restTemplate = new RestTemplate();

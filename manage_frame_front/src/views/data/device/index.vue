@@ -19,7 +19,7 @@
             <el-table-column prop="deviceName" label="设备名称" width="200" align="center"/>
             <el-table-column prop="userList" label="拥有此设备用户" align="center">
                 <template v-slot="scope">
-                    <el-tag size="small" type="warning" v-for="item in scope.row.sysUserList"> {{ item.username }}</el-tag>
+                    <el-tag size="small" type="danger" v-for="item in scope.row.sysUserList"> {{ item.username }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" width="200" align="center"/>
