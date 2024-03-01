@@ -1,7 +1,5 @@
 package com.xiaowu.config;
 
-import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xiaowu.entity.SysIotDevice;
 import com.xiaowu.entity.SysIotDeviceData;
@@ -16,8 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +23,9 @@ import java.util.Map;
  * 来源：
  */
 @Configuration      //1.主要用于标记配置类，兼备Component的效果。
-//@EnableScheduling   // 2.开启定时任务
+@EnableScheduling   // 2.开启定时任务
 public class IOTTimedTasksStaticConfig {
+    private int t =1708688970;
 
     @Resource
     private SysIotDeviceService sysIotDeviceService;
@@ -39,7 +36,7 @@ public class IOTTimedTasksStaticConfig {
     //3.添加定时任务
     //@Scheduled(cron = "0/5 * * * * ?")
     //或直接指定时间间隔，例如：5秒
-    @Scheduled(fixedRate=20000)
+    @Scheduled(fixedRate=30000)
     private void configureTasks() throws Exception {
         //查询所有设备
         List<SysIotDevice> list = sysIotDeviceService.list();
@@ -51,7 +48,6 @@ public class IOTTimedTasksStaticConfig {
                 //保存到数据库
                 System.out.println("设备不存在没有数据或者其他情况--");
             }else {
-                //TODO 保存数据到数据库
                 //System.out.println("执行静态定时任务" + res);
                 ObjectMapper mapper = new ObjectMapper();
                 try {
@@ -86,8 +82,11 @@ public class IOTTimedTasksStaticConfig {
                         }else if (identifier.equals("led")){
                             sysIotDeviceData.setLed(value.equals("true")? 1:0);
                         }
-                        //TODO
-                        //sysIotDeviceData.setTime((String) time);
+                        sysIotDeviceData.setFan(0);
+                        // 将时间戳转换为LocalDateTime
+                        String timeStr = TimeUtils.formatTimestamp(t);
+                        t++;
+                        sysIotDeviceData.setTime(timeStr);
                     }
                     sysIotDeviceDataService.save(sysIotDeviceData);
                 } catch (IOException e) {
@@ -96,4 +95,6 @@ public class IOTTimedTasksStaticConfig {
             }
         }
     }
+
+
 }

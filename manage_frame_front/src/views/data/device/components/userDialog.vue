@@ -1,5 +1,6 @@
 <template>
     <el-dialog model-value="userDialogVisible" title="分配用户" width="40%" @close="handleClose">
+        <div>Tip:目前此系统只支持一台设备可以分给多个用户，但是一个用户只能查看管理一台设备</div>
         <el-form ref="formRef" :model="form" label-width="100px">
             <el-checkbox-group v-model="form.checkedUsers">
                 <el-checkbox v-for="user in form.userList" :id="user.id" :key="user.id" :label="user.id"

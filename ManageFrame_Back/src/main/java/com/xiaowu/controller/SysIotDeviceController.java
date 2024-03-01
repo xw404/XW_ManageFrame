@@ -1,21 +1,26 @@
 package com.xiaowu.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaowu.common.Result;
 import com.xiaowu.entity.SysIotDevice;
+import com.xiaowu.entity.SysIotDeviceData;
 import com.xiaowu.entity.SysUser;
 import com.xiaowu.entity.bean.PageBean;
+import com.xiaowu.service.SysIotDeviceDataService;
 import com.xiaowu.service.SysIotDeviceService;
 import com.xiaowu.service.SysUserService;
 import com.xiaowu.util.StringUtil;
+import com.xiaowu.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -30,8 +35,33 @@ public class SysIotDeviceController {
     @Resource
     private SysIotDeviceService sysIotDeviceService;
 
+    @Resource
+    private SysIotDeviceDataService sysIotDeviceDataService;
+
     @Autowired
     private SysUserService sysUserService;
+
+    /**
+     * 查询设备总体数据(按最近时间取8条数据)
+     */
+    @GetMapping("/data/{deviceName}")
+    @PreAuthorize("hasAuthority('data:data:query')")
+    public Result queryDeviceDataByDeviceName(@PathVariable(value = "deviceName") String deviceName) throws ParseException {
+        if(deviceName==null ||deviceName.isEmpty()){
+            return Result.error("500","请输设备名称查询");
+        }
+        LambdaQueryWrapper<SysIotDeviceData> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysIotDeviceData::getDeviceName,deviceName);
+        wrapper.orderByDesc(SysIotDeviceData::getId);
+        wrapper.last("LIMIT 10");
+        List<SysIotDeviceData> list = sysIotDeviceDataService.list(wrapper);
+        for (SysIotDeviceData sysIotDeviceData : list) {
+            String timeNum = sysIotDeviceData.getTime();
+            String time = TimeUtils.yyyyMMddHHmmssToTimeString(timeNum);
+            sysIotDeviceData.setTime(time);
+        }
+        return Result.success(list);
+    }
 
     /**
      * 查询设备信息

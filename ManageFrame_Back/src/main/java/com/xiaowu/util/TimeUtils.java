@@ -1,7 +1,10 @@
 package com.xiaowu.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -9,12 +12,13 @@ import java.util.Date;
 /**
  * @Author 吴策
  * @Date 2023/12/23 17:26
- * @Description  时间工具类
+ * @Description 时间工具类
  */
 public class TimeUtils {
 
     /**
      * 获取当前时间。使用 LocalDateTime.now() 方法获取当前日期和时间。返回一个 LocalDateTime 对象，表示当前的日期和时间
+     *
      * @return
      */
     public static LocalDateTime getCurrentTime() {
@@ -26,6 +30,7 @@ public class TimeUtils {
      * 参数 pattern 是日期时间的格式模式，例如："yyyy-MM-dd HH:mm:ss"。返回格式化后的字符串。注意，
      * 这个方法仅适用于将日期时间对象转换为字符串，而不是将字符串转换为日期时间对象。如果需要将字符串转换为日期时间对象，
      * 请使用 parseDateTime() 方法。
+     *
      * @param dateTime
      * @param pattern
      * @return
@@ -39,6 +44,7 @@ public class TimeUtils {
     /**
      * 将字符串转换为日期时间对象（支持多种日期时间格式）。使用 LocalDateTime.parse() 方法将字符串转换为 LocalDateTime 对象。
      * 该方法支持多种日期时间格式，包括常见的格式如 "yyyy-MM-dd HH:mm:ss" 等。如果字符串的格式不
+     *
      * @param dateTimeStr
      * @return
      */
@@ -87,43 +93,79 @@ public class TimeUtils {
 
     /**
      * 日期对象转字符串
+     *
      * @param date
      * @param format
      * @return
      */
-    public static String formatDate(Date date,String format){
-        String result="";
-        SimpleDateFormat sdf=new SimpleDateFormat(format);
-        if(date!=null){
-            result=sdf.format(date);
+    public static String formatDate(Date date, String format) {
+        String result = "";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        if (date != null) {
+            result = sdf.format(date);
         }
         return result;
     }
 
     /**
      * 字符串转日期对象
+     *
      * @param str
      * @param format
      * @return
      * @throws Exception
      */
-    public static Date formatString(String str,String format) throws Exception{
-        if(StringUtil.isEmpty(str)){
+    public static Date formatString(String str, String format) throws Exception {
+        if (StringUtil.isEmpty(str)) {
             return null;
         }
-        SimpleDateFormat sdf=new SimpleDateFormat(format);
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.parse(str);
     }
 
-    public static String getCurrentDateStr(){
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmssSSSSSSSSS");
+    public static String getCurrentDateStr() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmssSSSSSSSSS");
         return sdf.format(date);
     }
 
-    public static String getCurrentDatePath()throws Exception{
-        Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd/");
+    public static String getCurrentDatePath() throws Exception {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         return sdf.format(date);
+    }
+
+    /**
+     * 将时间戳戳转化为yyyyMMddHHmmss格式的时间
+     *
+     * @param timestampInSeconds
+     * @return
+     */
+    public static String formatTimestamp(int timestampInSeconds) {
+        // 将秒级时间戳转换为Instant对象
+        Instant instant = Instant.ofEpochSecond(timestampInSeconds);
+        // 将Instant对象转换为LocalDateTime对象，使用系统默认时区
+        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        // 定义所需的日期时间格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        // 格式化日期时间
+        String formattedDateTime = dateTime.format(formatter);
+        return formattedDateTime;
+    }
+
+    /**
+     * 将时间yyyyMMddHHmmss格式转化为===》yyyy-MM-dd HH:mm:ss
+     *
+     * @param originalDateString
+     * @return
+     */
+    public static String yyyyMMddHHmmssToTimeString(String originalDateString) throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date date = inputFormat.parse(originalDateString);
+        String formattedDateString = outputFormat.format(date);
+        return formattedDateString;
+
     }
 }

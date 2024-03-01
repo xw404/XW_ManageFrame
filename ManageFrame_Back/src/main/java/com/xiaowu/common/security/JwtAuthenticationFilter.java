@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             "/login",
             "/logout",
             "/captcha",
+            "/weChat",
             "/password",
             "/image/**"
     } ;

@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/login",
             "/logout",
             "/captcha",
+            "/weChat",
             "/password",
             "/image/**",
             "/test/**"
