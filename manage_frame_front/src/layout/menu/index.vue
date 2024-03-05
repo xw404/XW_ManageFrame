@@ -1,7 +1,8 @@
 <template>
     <div class="manager-header">
         <img class="img" src="@/assets/logo.png"/>
-        <div class="title">IOT-RBAC系统</div>
+<!--        <div class="title">IOT-RBAC系统</div>-->
+        <div class="title">IOT-桑蚕养殖系统</div>
     </div>
     <el-menu
         active-text-color="#ffd04b"

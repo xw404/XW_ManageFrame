@@ -17,7 +17,7 @@
             <el-table-column type="selection" width="55"/>
             <el-table-column prop="productId" label="产品ID" width="100" align="center"/>
             <el-table-column prop="deviceName" label="设备名称" width="200" align="center"/>
-            <el-table-column prop="userList" label="拥有此设备用户" align="center">
+            <el-table-column prop="sysUserList" label="拥有此设备用户" align="center">
                 <template v-slot="scope">
                     <el-tag size="small" type="danger" v-for="item in scope.row.sysUserList"> {{ item.username }}</el-tag>
                 </template>
