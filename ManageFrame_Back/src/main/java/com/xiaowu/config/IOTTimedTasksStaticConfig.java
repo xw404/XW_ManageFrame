@@ -25,7 +25,6 @@ import java.util.Map;
 @Configuration      //1.主要用于标记配置类，兼备Component的效果。
 //@EnableScheduling   // 2.开启定时任务
 public class IOTTimedTasksStaticConfig {
-    private int t =1708688970;
 
     @Resource
     private SysIotDeviceService sysIotDeviceService;
@@ -71,10 +70,9 @@ public class IOTTimedTasksStaticConfig {
                         }else if (identifier.equals("temp")){
                             sysIotDeviceData.setTemp((String) value);
                         }
-                        //TODO
-                        //else if (identifier.equals("fan")){
-                        //    sysIotDeviceData.setFan(value.equals("true")? 1:0);
-                        //}
+                        else if (identifier.equals("fan")){
+                            sysIotDeviceData.setFan(value.equals("true")? 1:0);
+                        }
                         else if (identifier.equals("has_fire")){
                             sysIotDeviceData.setHasFire(value.equals("true")? 1:0);
                         }else if (identifier.equals("has_people")){
@@ -82,10 +80,8 @@ public class IOTTimedTasksStaticConfig {
                         }else if (identifier.equals("led")){
                             sysIotDeviceData.setLed(value.equals("true")? 1:0);
                         }
-                        sysIotDeviceData.setFan(0);
                         // 将时间戳转换为LocalDateTime
-                        String timeStr = TimeUtils.formatTimestamp(t);
-                        t++;
+                        String timeStr = TimeUtils.formatTimestampInMillis(Long.parseLong(time+""));
                         sysIotDeviceData.setTime(timeStr);
                     }
                     sysIotDeviceDataService.save(sysIotDeviceData);

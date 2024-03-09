@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaowu.common.Result;
 import com.xiaowu.entity.SysIotDevice;
 import com.xiaowu.entity.SysIotDeviceData;
+import com.xiaowu.entity.SysIotDeviceLinedata;
 import com.xiaowu.entity.SysUser;
 import com.xiaowu.entity.bean.PageBean;
 import com.xiaowu.service.SysIotDeviceDataService;
+import com.xiaowu.service.SysIotDeviceLinedataService;
 import com.xiaowu.service.SysIotDeviceService;
 import com.xiaowu.service.SysUserService;
 import com.xiaowu.util.StringUtil;
@@ -37,6 +39,9 @@ public class SysIotDeviceController {
 
     @Resource
     private SysIotDeviceDataService sysIotDeviceDataService;
+
+    @Resource
+    private SysIotDeviceLinedataService sysIotDeviceLinedataService;
 
     @Autowired
     private SysUserService sysUserService;
@@ -174,6 +179,18 @@ public class SysIotDeviceController {
         SysIotDevice sysIotDevice = sysIotDeviceService.getById(id);
         sysIotDevice.setUserList(userIdStrings.toString());
         sysIotDeviceService.updateById(sysIotDevice);
+        return Result.success();
+    }
+
+
+    /**
+     * 设置所有设备设置检测报警阈值
+     */
+    @PostMapping("/lineSet")
+    @PreAuthorize("hasAuthority('data:data:lineSet')")
+    public Result saveLineData(@RequestBody SysIotDeviceLinedata sysIotDeviceLinedata) {
+        sysIotDeviceLinedata.setId(1);
+        sysIotDeviceLinedataService.updateById(sysIotDeviceLinedata);
         return Result.success();
     }
 

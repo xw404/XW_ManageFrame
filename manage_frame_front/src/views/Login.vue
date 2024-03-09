@@ -3,7 +3,7 @@
     <div class="login">
 
         <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-            <h3 class="title">IOT-RBAC后台管理系统</h3>
+            <h3 class="title">IOT-桑蚕养殖管理系统</h3>
 
             <el-form-item prop="username">
 

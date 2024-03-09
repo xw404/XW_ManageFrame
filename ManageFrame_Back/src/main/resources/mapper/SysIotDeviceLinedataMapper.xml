@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaowu.mapper.SysIotDeviceLinedataMapper">
+
+    <resultMap id="BaseResultMap" type="com.xiaowu.entity.SysIotDeviceLinedata">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="tempH" column="temp_h" jdbcType="VARCHAR"/>
+            <result property="tempL" column="temp_l" jdbcType="VARCHAR"/>
+            <result property="humiH" column="humi_h" jdbcType="VARCHAR"/>
+            <result property="humiL" column="humi_l" jdbcType="VARCHAR"/>
+            <result property="lightH" column="light_h" jdbcType="VARCHAR"/>
+            <result property="lightL" column="light_l" jdbcType="VARCHAR"/>
+            <result property="mq2H" column="mq2_h" jdbcType="VARCHAR"/>
+            <result property="mq2L" column="mq2_l" jdbcType="VARCHAR"/>
+            <result property="fire" column="fire" jdbcType="VARCHAR"/>
+            <result property="people" column="people" jdbcType="VARCHAR"/>
+            <result property="led" column="led" jdbcType="VARCHAR"/>
+            <result property="fan" column="fan" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,temp_h,temp_l,
+        humi_h,humi_l,light_h,
+        light_l,mq2_h,mq2_l,
+        fire,people,led,
+        fan
+    </sql>
+</mapper>

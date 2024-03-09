@@ -138,10 +138,12 @@ public class TimeUtils {
     /**
      * 将时间戳戳转化为yyyyMMddHHmmss格式的时间
      *
-     * @param timestampInSeconds
+     * @param
      * @return
      */
-    public static String formatTimestamp(int timestampInSeconds) {
+    public static String formatTimestampInMillis(long timestampInMillis) {
+        // 将毫秒级时间戳转换为秒级时间戳
+        long timestampInSeconds = timestampInMillis / 1000;
         // 将秒级时间戳转换为Instant对象
         Instant instant = Instant.ofEpochSecond(timestampInSeconds);
         // 将Instant对象转换为LocalDateTime对象，使用系统默认时区
