@@ -82,33 +82,33 @@
             <h4>为设备设置预警阈值</h4>
         </template>
         <el-form ref="formRef" :model="lineForm" :rules="rules"  label-width="150px">
-            <el-form-item label="最高预警温度" prop="temp_h">
-                <el-input v-model="lineForm.temp_h" />
+            <el-form-item label="最高预警温度" prop="tempH">
+                <el-input v-model="lineForm.tempH" />
             </el-form-item>
-            <el-form-item label="最低预警温度" prop="temp_l">
-                <el-input v-model="lineForm.temp_l" />
+            <el-form-item label="最低预警温度" prop="tempL">
+                <el-input v-model="lineForm.tempL" />
             </el-form-item>
-            <el-form-item label="最高预警湿度" prop="humi_h">
-                <el-input v-model="lineForm.humi_h" />
+            <el-form-item label="最高预警湿度" prop="humiH">
+                <el-input v-model="lineForm.humiH" />
             </el-form-item>
-            <el-form-item label="最低预警湿度" prop="huni_l">
-                <el-input v-model="lineForm.humi_l"/>
+            <el-form-item label="最低预警湿度" prop="humiL">
+                <el-input v-model="lineForm.humiL"/>
             </el-form-item>
-            <el-form-item label="最高预警光照强度" prop="light_h">
-                <el-input v-model="lineForm.light_h"/>
+            <el-form-item label="最高预警光照强度" prop="lightH">
+                <el-input v-model="lineForm.lightH"/>
             </el-form-item>
-            <el-form-item label="最低预警光照强度" prop="light_l">
-                <el-input v-model="lineForm.light_l"/>
+            <el-form-item label="最低预警光照强度" prop="lightL">
+                <el-input v-model="lineForm.lightL"/>
             </el-form-item>
-            <el-form-item label="最高预警烟雾浓度" prop="mq2_h">
-                <el-input v-model="lineForm.mq2_h"/>
+            <el-form-item label="最高预警烟雾浓度" prop="mq2H">
+                <el-input v-model="lineForm.mq2H"/>
             </el-form-item>
-            <el-form-item label="最低预警烟雾浓度" prop="mq2_l">
-                <el-input v-model="lineForm.mq2_l"/>
+            <el-form-item label="最低预警烟雾浓度" prop="mq2L">
+                <el-input v-model="lineForm.mq2L"/>
             </el-form-item>
             <el-radio-group v-model="lineForm.fire" style="margin-left: 20px">
-                <el-radio :label="0">火源预警</el-radio>
-                <el-radio :label="1">无火预警</el-radio>
+                <el-radio :label="0">无火预警</el-radio>
+                <el-radio :label="1">火源预警</el-radio>
                 <el-radio :label="2">无需预警</el-radio>
             </el-radio-group>
 
@@ -119,14 +119,14 @@
             </el-radio-group>
 
             <el-radio-group v-model="lineForm.led" style="margin-left: 20px">
-                <el-radio :label="0">开灯预警</el-radio>
-                <el-radio :label="1">关灯预警</el-radio>
+                <el-radio :label="0">关灯预警</el-radio>
+                <el-radio :label="1">开灯预警</el-radio>
                 <el-radio :label="2">无需预警</el-radio>
             </el-radio-group>
 
             <el-radio-group v-model="lineForm.fan" style="margin-left: 20px">
-                <el-radio :label="0">风扇预警</el-radio>
-                <el-radio :label="1">关闭预警</el-radio>
+                <el-radio :label="0">关闭预警</el-radio>
+                <el-radio :label="1">风扇预警</el-radio>
                 <el-radio :label="2">无需预警</el-radio>
             </el-radio-group>
 
@@ -143,7 +143,7 @@
 
 <script setup>
 import * as echarts from 'echarts';
-import {ref, onMounted, watch, onUnmounted, defineProps} from "vue";
+import {ref, onMounted, onUnmounted} from "vue";
 import {Search, Setting} from '@element-plus/icons-vue';
 import {ElMessage} from 'element-plus';
 import requestUtil from "@/util/request";
@@ -153,27 +153,21 @@ const formRef = ref(null)
 
 const drawer = ref(false)
 const lineForm = ref({
-    temp_h: "", // 或其他默认值
-    temp_l: "",
-    humi_h: "",
-    humi_l: "",
-    light_h: "",
-    light_l: "",
-    mq2_h: "",
-    mq2_l: "",
     people: 2,
     led: 2,
     fire: 2,
     fan: 2
 })
-// const rules = ref({
-//     //TODO 数字校验
-//     // temp_h: [{required: true, message: "不能为空", trigger: "blur"}, {
-//     //     type: "int",
-//     //     message: "请输入数字",
-//     //     trigger: ["blur", "change"]
-//     // }]
-// })
+const rules = {
+    tempH: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    tempL: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    humiH: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    humiL: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    lightH: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    lightL: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    mq2H: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }],
+    mq2L: [{ required: true, trigger: ["blur", "change"], message: "请填写信息" }]
+};
 
 const fan = ref("");
 const led = ref("");
@@ -472,14 +466,23 @@ const cancelClick = () => {
 }
 
 const confirmClick = async () => {
-    let result = await requestUtil.post("data/device/lineSet", lineForm.value);
-    let data = result.data;
-    if (data.code == 200) {
-        ElMessage.success("执行成功，立即生效！")
-        cancelClick();
-    } else {
-        ElMessage.error(data.msg);
-    }
+    formRef.value.validate(async (valid) => {
+        if (valid) {
+            console.log(lineForm.value)
+            let result = await requestUtil.post("data/device/lineSet", lineForm.value);
+            let data = result.data;
+            if (data.code == 200) {
+                ElMessage.success("执行成功，立即生效！")
+                cancelClick();
+                //重置表单
+                formRef.value.resetFields();
+            } else {
+                ElMessage.error(data.msg);
+            }
+        }else {
+            console.log("fail")
+        }
+    })
 }
 </script>
 

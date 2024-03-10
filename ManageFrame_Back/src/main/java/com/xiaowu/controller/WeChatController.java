@@ -181,7 +181,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getTempH()) <= Float.parseFloat(sysIotDeviceData.getTemp())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="高温预警";
-                    String tipMsg ="当前温度达到了【"+sysIotDeviceData.getTemp()+"】,可能会导致蚕宝宝食欲减弱，生长缓慢慢，甚至停止摄食哟！";
+                    String tipMsg ="当前温度达到了【"+sysIotDeviceData.getTemp()+"℃】,可能会导致蚕叶片失水，蚕宝宝食欲减弱，生长缓慢慢，甚至停止摄食哟！请及时调整温度。";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -192,7 +192,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getTempL()) > Float.parseFloat(sysIotDeviceData.getTemp())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="低温预警";
-                    String tipMsg ="当前温度达到了【"+sysIotDeviceData.getTemp()+"】,可能会导致蚕宝宝患病或变得易感哟！要及时调节温度哟";
+                    String tipMsg ="当前温度低至【"+sysIotDeviceData.getTemp()+"℃】,可能会导致蚕宝宝患病或变得易感，要及时调节温度哟！";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -203,7 +203,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getHumiH()) <= Float.parseFloat(sysIotDeviceData.getHumi())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="高湿度预警";
-                    String tipMsg ="环境湿度达到了【"+sysIotDeviceData.getTemp()+"%】,过高的湿度会限制蚕体水分的散发，导致蚕的体温过高，呼吸量增多，脉搏加快。";
+                    String tipMsg ="环境湿度达到了【"+sysIotDeviceData.getTemp()+"%】,过高的湿度会限制蚕体水分的散发，导致蚕的体温过高，呼吸量增多，脉搏加快，不利于生长，请及时通风或者采取其他降湿措施哟！";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -214,7 +214,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getHumiL()) > Float.parseFloat(sysIotDeviceData.getHumi())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="低湿度预警";
-                    String tipMsg ="环境湿度达到了【"+sysIotDeviceData.getTemp()+"%】,桑叶可能会迅速失去水分，变得干燥，这不仅降低了其口感和营养价值，还可能使蚕宝宝难以下咽，导致摄食量减少";
+                    String tipMsg ="环境湿度达到了【"+sysIotDeviceData.getTemp()+"%】,桑叶可能会迅速失去水分，变得干燥，这不仅降低了其口感和营养价值，还可能使蚕宝宝难以下咽，导致摄食量减少！";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -225,7 +225,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getLightH()) <= Float.parseFloat(sysIotDeviceData.getLight())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="强光预警";
-                    String tipMsg ="当前光强达到了【"+sysIotDeviceData.getLight()+"%】过高的光照强度会使桑蚕感到不适";
+                    String tipMsg ="当前光强达到了【"+sysIotDeviceData.getLight()+"%】过高的光照强度会使桑蚕感到不适，桑蚕和桑叶都会水分蒸发哟!";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -236,7 +236,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getLightL()) > Float.parseFloat(sysIotDeviceData.getLight())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="黑暗预警";
-                    String tipMsg ="当前环境光强为【"+sysIotDeviceData.getTemp()+"】长时间光照不足可能影响桑蚕的代谢过程，降低其抵抗力，使其更容易受到疾病和寄生虫的侵害哟";
+                    String tipMsg ="当前环境可见度太低了【"+sysIotDeviceData.getTemp()+"%】长时间光照不足可能影响桑蚕的代谢过程，降低其抵抗力，使其更容易受到疾病和寄生虫的侵害哟，要及时调整室内光照哟";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
@@ -247,7 +247,7 @@ public class WeChatController {
                 if (Float.parseFloat(sysIotDeviceLinedata.getMq2H()) <= Float.parseFloat(sysIotDeviceData.getMq2())) {
                     sysLinedataMsg.setCreateTime(new Date());
                     String tipTitle ="烟雾预警";
-                    String tipMsg ="当前温烟雾浓度过高【"+sysIotDeviceData.getTemp()+"】请尽快通风并查看，避免损失！";
+                    String tipMsg ="当前温烟雾浓度过高【"+sysIotDeviceData.getTemp()+"%】请尽快通风并查看，避免损失！";
                     sysLinedataMsg.setTitle(tipTitle);
                     sysLinedataMsg.setMsg(tipMsg);
                     //移除之前的信息，以免数据太重复
